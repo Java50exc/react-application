@@ -7,10 +7,10 @@ export function getRandomElement(array: any[]): any {
 export function getRandomMatrix(rows: number, columns: number, minNumber: number,
      maxNumber: number):  number[][] {
         function getRow(): number[] {
-            return Array.from(Array(columns)).map(() =>
-             getRandomNumber(minNumber, maxNumber + 1))
+            return Array.from({length: columns},
+                 () => getRandomNumber(minNumber, maxNumber + 1))
         }
-        const res: number[][] = Array.from(Array(rows)).map(() => getRow());
+        const res: number[][] = Array.from({length: rows}, ()=>getRow());
        
         return res;
      }
