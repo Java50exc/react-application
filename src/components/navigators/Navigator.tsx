@@ -19,7 +19,7 @@ export const Navigator: React.FC<Props> = ({ subnav, routes }) => {
                 <NavLink to={route.path}>{route.label}
                 </NavLink></li>)
     }
-    return <div>
+    return <div style={{marginTop:"10vh"}}>
         <nav>
           <ul className={`navigator-list ${subnav ? 'navigator-sublist' : ''}`}>
             {getItems()}

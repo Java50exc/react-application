@@ -14,12 +14,13 @@ import { ShoppingCart } from './components/pages/ShoppingCart';
 import { routes } from './config/layout-config'
 import { Navigator } from './components/navigators/Navigator';
 import { routesProduct } from './config/products-config';
+import { NavigatorDesktop } from './components/navigators/NavigatorDesktop';
 
 function App() {
 
      return <BrowserRouter>
           <Routes>
-               <Route path='/' element={<Navigator routes={routes} />}>
+               <Route path='/' element={<NavigatorDesktop routes={routes} />}>
                     <Route index element={<Home />} />
                     <Route path='customers' element={<Customers />} />
                     <Route path='orders' element={<Orders />} />
@@ -27,6 +28,7 @@ function App() {
                     <Route path='products' element={<Navigator subnav routes={routesProduct} />}>
                          <Route path='dairy' element={<Dairy />} />
                          <Route path='bread' element={<Bread />} />
+                        
 
                     </Route>
                </Route>
