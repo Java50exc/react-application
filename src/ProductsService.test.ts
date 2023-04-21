@@ -16,10 +16,10 @@ test ("random category exists", ()=> {
     return productsService.isCategoryExist(category)
     .then(res => expect(res).toBeTruthy());
 })
-test ("category kukureku doesn't exist", () => {
+test ("category kukureku doesn't exist", () => 
     productsService.isCategoryExist("kukureku")
-    .then(res => expect(res)).then(res=>res.toBeFalsy());
-})
+    .then(res => expect(res)).then(res=>res.toBeFalsy())
+)
 test ("all categories exist test",  () => 
     Promise.all(categories.map(c => productsService.isCategoryExist(c)))
     .then(res => expect(res.every(v => v))).then(res=>res.toBeTruthy())

@@ -3,9 +3,11 @@ import { ProductType } from "../model/ProductType";
 import ProductsService from "./ProductsService";
 import productsConfig from "../config/products-config.json"
 import { firebaseApp } from "../config/firebase-config";
-import {getFirestore, collection, getDoc, deleteDoc, setDoc, getCountFromServer, doc}
+import {collectionData} from "rxfire/firestore";
+import {getFirestore, collection, getDocs, getDoc, deleteDoc, setDoc, getCountFromServer, doc}
  from "firebase/firestore";
 import { getRandomNumber } from "../util/random";
+import { Observable } from "rxjs";
 export const PRODUCTS_COLLECTION = "products";
 export const CATEGORIES_COLLECTION = "categories";
 export class ProductsServiceFirebase implements ProductsService {
@@ -49,6 +51,9 @@ export class ProductsServiceFirebase implements ProductsService {
             console.log(`created ${count} products`)
         }
         return count;
+    }
+    getProducts(): Observable<ProductType[]> {
+        return collectionData(this.productsCollection) as Observable<ProductType[]>
     }
 
 }
