@@ -3,17 +3,14 @@ import React, { ReactNode, useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import './App.css';
-import { Bread } from './components/pages/Bread';
 import { Customers } from './components/pages/Customers';
-import { Dairy } from './components/pages/Dairy';
 import { Home } from './components/pages/Home';
 import { NotFound } from './components/pages/NotFound';
 import { Orders } from './components/pages/Orders';
 import { Products } from './components/pages/Products';
 import { ShoppingCart } from './components/pages/ShoppingCart';
 import { routes } from './config/layout-config'
-import { Navigator } from './components/navigators/Navigator';
-import { routesProduct } from './config/products-config';
+
 import { NavigatorDesktop } from './components/navigators/NavigatorDesktop';
 import { useSelector, useDispatch } from 'react-redux';
 import { RouteType } from './model/RouteType';
@@ -22,6 +19,9 @@ import { Logout } from './components/pages/Logout';
 import { productsService } from './config/products-service-config';
 import { ProductType } from './model/ProductType';
 import { productsActions } from './redux/productsSlice';
+import { Subscription } from 'rxjs';
+import { ordersService } from './config/orders-service-config';
+import { shoppingActions } from './redux/shoppingSlice';
 
 function App() {
      const authUser = useSelector<any, string>(state=>state.auth.authUser);
@@ -52,7 +52,23 @@ useEffect (() => {
           }
      })
      return () => subscription.unsubscribe()
-})
+}, []);
+useEffect(() => {
+     let subscription: Subscription;
+     if (authUser != '' && !authUser.includes("admin")) {
+          subscription = ordersService.getShoppingCart(authUser).subscribe ({
+               next: (shopping) => dispatch(shoppingActions.setShopping(shopping))
+          })
+     } else {
+          dispatch(shoppingActions.resetShopping());
+     }
+     return () => {
+          if (subscription) {
+               subscription.unsubscribe();
+          }
+     }
+}, [authUser])
+
      return <BrowserRouter>
           <Routes>
                <Route path='/' element={<NavigatorDesktop routes={routesState} />}>
