@@ -38,7 +38,7 @@ function getRoutes(): RouteType[] {
 function routePredicate(route: RouteType): boolean | undefined {
      return route.always ||( route.authenticated && !!authUser )
       || (route.admin && authUser.includes('admin')) ||
-       (route.no_authenticated && !authUser)  
+       (route.no_authenticated && !authUser)  || (route.client && authUser != '' && !authUser.includes("admin"))
 }
 useEffect(() => {
      setRoutes(getRoutes());
