@@ -15,7 +15,7 @@ export const ProductsAdmin: React.FC = () => {
     const columns: GridColDef[] = [
         {field:"image", headerName: '', flex: 0.3, editable: true,
          renderCell: (params) => <Avatar 
-         src={params.value.startsWith("http") || params.value.length > 40? params.value : `images/${params.value}`} 
+         src={params.value} 
          sx={{width: "90%", height: "80px"}}/>, align: "center", headerAlign: "center"},
         {field: "title", headerName: 'Title', flex: 0.8, align: "center", headerAlign: "center"},
         {field: "category", headerName: "Category", flex: 0.5},
@@ -42,10 +42,15 @@ export const ProductsAdmin: React.FC = () => {
         setOpen(true);
     }
     function submitAddProduct(product: ProductType): string {
-        //TODO validation of title & unit cannot be the same at two different products
-        productsService.addProduct(product);
+        let res = '';
+        if (products.find(p => p.title == product.title && p.unit == product.unit)) {
+            res = `product ${product.title} with unit ${product.unit} already exists`
+        } else {
+            productsService.addProduct(product);
         setFlAdd(false);
-        return '';
+        }
+        
+        return res;
     }
     return !flAdd ? <Box sx={{width: "100vw",display: "flex",
      flexDirection: "column", justifyContent:"center", alignItems: "center"}}>
