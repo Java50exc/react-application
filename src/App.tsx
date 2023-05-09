@@ -24,6 +24,7 @@ import { ordersService } from './config/orders-service-config';
 import { shoppingActions } from './redux/shoppingSlice';
 import { CategoryType } from './model/CategoryType';
 import { categoriesActions } from './redux/categoriesSlice';
+import { ordersActions } from './redux/ordersSlice';
 
 function App() {
      const authUser = useSelector<any, string>(state => state.auth.authUser);
@@ -81,6 +82,19 @@ function App() {
                subscription.unsubscribe();
           }
      }, [])
+     useEffect(() => {
+          let subscription: Subscription;
+          if (authUser) {
+               subscription = authUser.includes('admin') ? ordersService.getAllOrders()
+               .subscribe({
+                    next: (orders) => dispatch(ordersActions.setOrders(orders))
+               }) : ordersService.getCustomerOrders(authUser)
+               .subscribe({
+                    next: (orders) => dispatch(ordersActions.setOrders(orders))
+               })
+          }
+          return () => subscription && subscription.unsubscribe();
+     }, [authUser])
 
 
      return <BrowserRouter>

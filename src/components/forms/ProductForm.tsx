@@ -17,7 +17,7 @@ const initialProduct: ProductType = {
 const {minCost, maxCost, units} = productParams;
 export const ProductForm: React.FC<Props> = ({ submitFn }) => {
     const [product, setProduct] = useState<ProductType>(initialProduct);
-    const image = useRef<string>('');
+    
     const alertMessage = useRef<string>('');
     const [open, setOpen] = useState<boolean>(false);
     const categories: string[] = useSelector<any, string[]>
@@ -34,7 +34,6 @@ export const ProductForm: React.FC<Props> = ({ submitFn }) => {
     }
     function imageHandler(event: any) {
         const urlImage = event.target.value;
-        image.current = urlImage;
         setProduct({ ...product, image: urlImage });
     }
     function titleHandler(event: any) {
@@ -60,7 +59,8 @@ export const ProductForm: React.FC<Props> = ({ submitFn }) => {
         return units.map(u => <MenuItem value={u}>{u}</MenuItem>)
     }
     return <Box sx={{marginTop: "15vh"}}>
-        <form onSubmit={onSubmitFn}>
+        <form onSubmit={onSubmitFn} onReset={() => {setProduct(initialProduct);
+        }}>
             <Grid container spacing={4} justifyContent={'center'}>
                 <Grid item xs={12} sm={8} >
                     <TextField label='URL image'
@@ -70,7 +70,7 @@ export const ProductForm: React.FC<Props> = ({ submitFn }) => {
                 <Grid item xs={10} justifyContent={'center'}>
                     <Box sx={{width: "100%",
                         height: "10vw", display: 'flex', justifyContent: 'center'}} >
-                    {image.current && <img src={image.current} style={{
+                    {product.image && <img src={product.image} style={{
                         width: "20vw",
                         height: "10vw"
                     }} />}
@@ -99,7 +99,7 @@ export const ProductForm: React.FC<Props> = ({ submitFn }) => {
                          onChange={costHandler} type="number" inputProps={{
                             min: `${minCost}`,
                             max : `${maxCost}`,
-                            step: '0.10'
+                            step: '0.01'
                         }} helperText={`enter cost value in the range [${minCost} - ${maxCost}]`}/>
                 </Grid>
                 <Grid item xs={8} sm={5}>
