@@ -14,6 +14,7 @@ function getOrderId(): string {
         .join('');
 }
 export default class OrdersServiceFirebase implements OrdersService {
+    
 
     db = getFirestore(firebaseApp);
     ordersCollection = collection(this.db, "orders");
@@ -76,6 +77,10 @@ export default class OrdersServiceFirebase implements OrdersService {
     }
     getAllOrders(): Observable<OrderType[]> {
         return collectionData(this.ordersCollection) as Observable<OrderType[]>
+    }
+    async updateOrder(order: OrderType): Promise<void> {
+        console.log(order);
+        await setDoc(doc(this.ordersCollection, order.id), order);
     }
 
 }
