@@ -23,7 +23,7 @@ export const Orders: React.FC = () => {
     const orders = useSelector<any, OrderType[]>(state => state.ordersState.orders);
     const authUser = useSelector<any, string>(state => state.auth.authUser);
     const tableData = useMemo(() => getTableData(), [orders]);
-    const columns: GridColDef[] = useMemo(() => getColumns(), [authUser])
+    const columns: GridColDef[] = useMemo(() => getColumns(), [authUser, orders])
     function getTableData(): {
         id: string, email: string, productsAmount: number,
         cost: number, orderDate: string, deliveryDate: string
@@ -62,7 +62,7 @@ export const Orders: React.FC = () => {
                     if (authUser.includes("admin")) {
                         res.push(<GridActionsCellItem label="delivery"
                          icon={<LocalShipping />}
-                        disabled={params.row.deliveryDate}
+                        disabled={!!params.row.deliveryDate}
                            onClick={async () => await delivery(params.id as string,
                                new Date().toISOString().substring(0, 10))}/>)
    
@@ -72,15 +72,19 @@ export const Orders: React.FC = () => {
             }
 
         ];
-        const adminColumns: GridColDef[] = [
-            { field: 'email', headerName: 'Customer', flex: 0.8 },
-            
-        ]
-        return authUser.includes('admin') ? commonColumns.concat(adminColumns) : commonColumns
+        
+        if(authUser.includes('admin')) {
+            commonColumns.splice(1, 0, { field: 'email', headerName: 'Customer', flex: 0.8 })
+        }
+        
+        return  commonColumns;
     }
     async function delivery(id: string, date: string) {
         const order = { ...orders.find(o => o.id == id)!, deliveryDate: date };
-        await ordersService.updateOrder(order!)
+        if(!!order.id) {
+               await ordersService.updateOrder(order!)
+        }
+     
     }
     function updateError(error: any) {
 
@@ -121,7 +125,10 @@ export const Orders: React.FC = () => {
             </Alert>
         </Snackbar>
         <Modal open={openContent} onClose={() => setOpenContent(false)}>
-            <OrderContent orderId={orderId.current}/>
+            <Box>
+                 <OrderContent orderId={orderId.current}/>
+            </Box>
+           
         </Modal>
     </Box>
 }
