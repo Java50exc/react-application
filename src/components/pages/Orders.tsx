@@ -6,6 +6,7 @@ import { DataGrid, GridActionsCellItem, GridColDef } from "@mui/x-data-grid";
 import { LocalShipping, Visibility } from "@mui/icons-material";
 import { ordersService } from "../../config/orders-service-config";
 import { OrderContent } from "../OrderContent";
+import { ConfirmationDialog } from "../ConfirmationDialog";
 function checkDateFormat(date: string): boolean {
     const dateParts = date.split("-");
     let res: boolean = false;
@@ -19,11 +20,21 @@ export const Orders: React.FC = () => {
     const [openAlert, setOpenAlert] = useState(false);
     const [openContent, setOpenContent] = useState(false);
     const orderId = useRef('');
-    const alertMessage = useRef('')
+    const [openConfirmation, setOpenConfirmation] = useState<boolean>(false);
+    const alertMessage = useRef<string>('');
+    const title = useRef<string>('');
+    const content = useRef<string>('');
+    const deliveryDate = useRef<string>('');
     const orders = useSelector<any, OrderType[]>(state => state.ordersState.orders);
     const authUser = useSelector<any, string>(state => state.auth.authUser);
     const tableData = useMemo(() => getTableData(), [orders]);
-    const columns: GridColDef[] = useMemo(() => getColumns(), [authUser, orders])
+    const columns: GridColDef[] = useMemo(() => getColumns(), [authUser, orders]);
+    function actualUpdate(isAgree: boolean) {
+        if(isAgree) {
+            delivery(orderId.current, deliveryDate.current);
+        }
+        setOpenConfirmation(false)
+    }
     function getTableData(): {
         id: string, email: string, productsAmount: number,
         cost: number, orderDate: string, deliveryDate: string
@@ -91,7 +102,7 @@ export const Orders: React.FC = () => {
         alertMessage.current = JSON.stringify(error);
         setOpenAlert(true)
     }
-    async function updateDeliveryDate(newRow: any) {
+    async function updateDeliveryDate(newRow: any, oldRow: any) {
         const newDeliveryDate = newRow.deliveryDate;
         const orderDate = newRow.orderDate;
 
@@ -108,8 +119,18 @@ export const Orders: React.FC = () => {
             
 
         } 
-        await delivery(newRow.id, newDeliveryDate);
-        return newRow;
+        orderId.current = newRow.id;
+        deliveryDate.current = newDeliveryDate;
+        if(!newDeliveryDate) {
+            title.current = 'Canceling delivery?'
+            content.current = `You are going to cancel order ${newRow.id}`
+        } else {
+            title.current = 'Updating delivery date?'
+            content.current = `You are going to update delivery date of the order ${newRow.id}
+            from ${oldRow.deliveryDate} to ${newDeliveryDate}`
+        }
+        setOpenConfirmation(true);
+        return oldRow;
     }
     return <Box sx={{
         display: "flex", flexDirection: "column", height: "80vh",
@@ -130,5 +151,7 @@ export const Orders: React.FC = () => {
             </Box>
            
         </Modal>
+        <ConfirmationDialog open={openConfirmation} onCloseFn={actualUpdate}
+            title={title.current} content={content.current} />
     </Box>
 }
