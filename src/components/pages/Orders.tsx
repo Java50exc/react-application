@@ -44,7 +44,19 @@ export const Orders: React.FC = () => {
             productsAmount: o.shopping.length,
             cost: o.shopping.reduce((res, cur) => res + cur.cost * cur.count, 0),
             orderDate: o.orderDate, deliveryDate: o.deliveryDate
-        }));
+        })).sort((r1, r2) => {
+            let res = 0;
+            if(!r1.deliveryDate && r2.deliveryDate ) {
+                res = -1;
+            } else if (r1.deliveryDate && !r2.deliveryDate) {
+                res = 1;
+            } else if(!r1.deliveryDate && !r2.deliveryDate) {
+                res = r1.orderDate.localeCompare(r2.orderDate);
+            } else {
+                res = r2.deliveryDate.localeCompare(r1.deliveryDate);
+            }
+            return res;
+        });
     }
     function getColumns(): GridColDef[] {
         const commonColumns: GridColDef[] = [
@@ -57,10 +69,10 @@ export const Orders: React.FC = () => {
                 field: 'cost', headerName: 'Cost', flex: 0.4, type: "number",
                 headerAlign: 'center', align: 'center'
             },
-            { field: 'orderDate', headerName: 'Order Date', flex: 0.5 },
+            { field: 'orderDate', headerName: 'Order Date', flex: 0.5,sortable: false },
             {
                 field: 'deliveryDate', headerName: 'Delivery Date', flex: 0.5,
-                editable: authUser.includes('admin')
+                editable: authUser.includes('admin'), sortable: false
             },
             {
                 field: 'actions', type: 'actions', getActions: params => {
@@ -123,7 +135,7 @@ export const Orders: React.FC = () => {
         deliveryDate.current = newDeliveryDate;
         if(!newDeliveryDate) {
             title.current = 'Canceling delivery?'
-            content.current = `You are going to cancel order ${newRow.id}`
+            content.current = `You are going to cancel delivery of the order ${newRow.id}`
         } else {
             title.current = 'Updating delivery date?'
             content.current = `You are going to update delivery date of the order ${newRow.id}
