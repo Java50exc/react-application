@@ -31,15 +31,17 @@ export const ProductsClient: React.FC = () => {
     function getProductCards(): ReactNode {
         return products.map((p, index) => <Grid item xs={8} sm={5} md={3} key={index}>
             <Card>
-                <CardMedia sx={{ height: 140 }} image={p.image} />
+                <CardMedia sx={{height: {xs: 140, sm: 110, md: 140}}} image={p.image} />
                 <CardContent sx={{
                     textAlign: "center",
                     backgroundColor: "aliceblue"
                 }}>
-                    <Typography gutterBottom sx={{ fontSize: "1.3em" }} >
+                    <Typography gutterBottom sx={{ fontSize: {xs: "1.3em",
+                     sm: "1em", md: "1.3em"} }} >
                         {p.title}
                     </Typography>
-                    <Typography color="text.secondary" sx={{ fontSize: "1.2em" }}>
+                    <Typography color="text.secondary" sx={{ fontSize: {xs: "1.2em",
+                sm: "1em", md: "1.2em"} }}>
                         {p.unit}
                     </Typography>
                     <Typography color="text.secondary" sx={{ fontSize: "1.1em" }}>
@@ -57,8 +59,8 @@ export const ProductsClient: React.FC = () => {
                                 }
                                 
                                 }}><Add/></Button></Grid>
-                        <Grid item xs={4}><Typography sx={{fontSize: "1.2em",display: "flex",width: "100%",height:"100%",alignItems: "center", justifyContent: "center"}}>{counts[index]}</Typography></Grid>
-                        <Grid item xs={4}><Button size="large" onClick={async () =>
+                        <Grid item xs={4}><Typography sx={{fontSize: {xs: "1.2em", sm: "0.9em", md:"1.2em"},display: "flex",width: "100%",height:"100%",alignItems: "center", justifyContent: "center"}}>{counts[index]}</Typography></Grid>
+                        <Grid item xs={4}><Button size="small" onClick={async () =>
                              ordersService.removeShoppingProductUnit(authUser, p.id!)} disabled={counts[index] == 0} ><Remove></Remove></Button></Grid>
                     </Grid>
                     
@@ -69,7 +71,8 @@ export const ProductsClient: React.FC = () => {
         </Grid>)
     }
 
-    return <Grid container spacing={6} justifyContent="center">
+    return <Grid container spacing={{xs:6, sm: 4, md: 6}} justifyContent="center" 
+    sx= {{marginTop: {sm: "1vh"}}}>
         {getProductCards()}
     </Grid>
 }

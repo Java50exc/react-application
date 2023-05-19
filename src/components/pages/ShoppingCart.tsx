@@ -4,10 +4,11 @@ import { ShoppingProductType } from "../../model/ShoppingProductType";
 import { useMemo, useRef, useState } from "react";
 import { ordersService } from "../../config/orders-service-config";
 import { GridColDef, DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
-import { Avatar, Box, Typography, Snackbar, Alert, Button } from "@mui/material";
+import { Avatar, Box, Typography, Snackbar, Alert, Button, useMediaQuery } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 import { ShoppingDataType } from "../../model/ShoppingDataType";
 import { ConfirmationDialog } from "../ConfirmationDialog";
+import { Rotate } from "../RotateNeed";
 
 const UPDATE = 'Updating count of shopping product?';
 const REMOVE = 'Removing shopping product?'
@@ -53,6 +54,7 @@ export const ShoppingCart: React.FC = () => {
     ]
     const tableData = useMemo(() => getTableData(), [products, shopping]);
     const total = useMemo(() => getTotalCost(), [tableData]);
+    const portrait = useMediaQuery('(max-width: 600px)')
      function updateCount(newRow: any, oldRow: any) {
         const rowData: ShoppingDataType = newRow;
         if (rowData.count < 1) {
@@ -100,8 +102,9 @@ export const ShoppingCart: React.FC = () => {
         return res;
 
     }
-    return <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '80vh', alignItems: 'center' }}>
-        <Box sx={{ height: '60vh', width: '70vw' }}>
+    return portrait ? <Rotate></Rotate> : <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center',
+     height: '80vh', alignItems: 'center', marginTop: {sm: '20vh'} }}>
+        <Box sx={{ height: '60vh', width: {sm: '90vw', md: '75vw'} }}>
             <DataGrid columns={columns} rows={tableData} getRowHeight={() => 'auto'}
                 processRowUpdate={updateCount}
                  onProcessRowUpdateError={(error) => {

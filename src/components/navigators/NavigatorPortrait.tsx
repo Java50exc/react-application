@@ -15,7 +15,11 @@ export const NavigatorPortrait: React.FC<Props> = ({ routes }) => {
     const navigate = useNavigate();
     useEffect(() => {
         if (routes.length > 0) {
-            navigate(routes[0].path);
+            let routeIndex = routes.findIndex(r => r.path == location.pathname);
+            if(routeIndex < 0) {
+                routeIndex = 0;
+            }
+            navigate(routes[routeIndex].path);
         }
 
     }, [routes]);
@@ -29,8 +33,8 @@ export const NavigatorPortrait: React.FC<Props> = ({ routes }) => {
         setOpen(!flOpen);
     }
     function getListItems(): React.ReactNode {
-        return routes.map(i => <ListItem onClick={toggleOpen} 
-            component={Link} to={i.path} key={i.path}>{i.label}</ListItem>)
+        return routes.map(route => <ListItem onClick={toggleOpen} 
+            component={Link} to={route.path} key={route.path}>{route.label}</ListItem>)
     }
     return <Box sx={{ marginTop: { xs: "15vh", sm: "20vh" } }}>
         <AppBar position="fixed">
