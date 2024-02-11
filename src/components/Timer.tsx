@@ -4,14 +4,8 @@ export const Timer: React.FC = () => {
     const [time, setTime] = React.useState(new Date())
     const styles: React.CSSProperties = { backgroundColor: "lightblue", fontSize: "2em" };
 
-
-    setTimeout(() => {
-        tic();
-
-        if (!(time.getSeconds() % 10)) {
-            color()
-        }
-    }, 1000);
+    setTimeout(color, 10000);
+    setTimeout(tic, 1000);
 
 
     function tic() {
@@ -19,7 +13,7 @@ export const Timer: React.FC = () => {
     }
 
     function color() {
-        titleColor === "red" ? setColor("lightblue") : setColor("red");
+        setColor(titleColor === "red" ? "lightblue" : "red");
     }
 
     return <div>
