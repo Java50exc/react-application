@@ -4,7 +4,7 @@ import './App.css';
 import { Timer } from './components/Timer';
 
 function App() {
-  return <div>
+  return <div className="timer-container">
     <Timer cityCountry="London"/>
     <Timer cityCountry="Vladivostok"/>
     <Timer cityCountry="Israel"/>

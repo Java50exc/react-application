@@ -1,3 +1,14 @@
 .Appl {
   font-size: 2em;
 }
+
+
+.timer-container {
+  align-content: space-between;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  display: flex;
+  width: 85vw;
+  height: 50vh;
+  margin: 25vh auto;
+}
