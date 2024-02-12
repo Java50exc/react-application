@@ -1,37 +1,47 @@
-import React, {useState, useEffect, useRef} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import timeZones from "../time-zones";
+import { Input } from "./Input";
+
 type Props = {
-    cityCountry:string;
+    cityCountry: string;
 }
-export const Timer:React.FC<Props> = ({cityCountry}) => {
-const styles: React.CSSProperties = {backgroundColor:"lightblue",
-fontSize: "2em"};
+export const Timer: React.FC<Props> = ({ cityCountry }) => {
+    const styles: React.CSSProperties = { backgroundColor: "lightblue", fontSize: "2em" };
+    const [time, setTime] = useState<Date>(new Date());
+    const [timeZone, setZone] = useState<string>(getTimeZone(cityCountry)!);
+    const [currentCityCountry, setCityTitle] = useState<string>(getTimeZone(cityCountry)!);
 
-const [time, setTime] = useState<Date>(new Date());
-const timeZone = useRef<string|undefined>();
-function tic() {
-    setTime(new Date());
-    
-}
-useEffect(
- () => {
-    timeZone.current = getTimeZone();
- }, [cityCountry]
-)
 
-useEffect(() => {
-    const interval = setInterval(tic, 2000);
-    console.log("useEffect");
-    return () => clearInterval(interval);
-}, [])
-function getTimeZone(): string | undefined{
-    const index = timeZones.findIndex(tz => JSON.stringify(tz).includes(cityCountry));
-    console.log("getTimeZone")
-    return index < 0 ? undefined : timeZones[index].name
-} 
+    function tic() {
+        setTime(new Date());
+    }
+
+    useEffect(() => {
+        const interval = setInterval(tic, 1000);
+        return () => clearInterval(interval);
+    }, [])
+
+    function setTimeZone(city: string): string {
+        const timeZone: string = getTimeZone(city)!;
+
+        if (timeZone) {
+            const zoneName: string[] = timeZone.split('/');
+            const cityCountry: string = zoneName[zoneName.length - 1];
+            setCityTitle(cityCountry.split('_').join(' '));
+            setZone(timeZone);
+            return "";
+        }
+        return "No such time zone";
+    }
+
+    function getTimeZone(city: string): string | undefined {
+        const index = timeZones.findIndex(tz => JSON.stringify(tz).includes(city));
+        return index < 0 ? undefined : timeZones[index].name;
+    }
+
     return <div>
-        <h2 >Current Time in {cityCountry}</h2>
-        <p style={styles}>{time.toLocaleTimeString(undefined,
-             {timeZone: timeZone.current})}</p>
+        <Input submitFn={setTimeZone} placeHolder={"Choose city or country"} />
+        <h2 >Current Time in {currentCityCountry}</h2>
+        <p style={styles}>{time.toLocaleTimeString(undefined, { timeZone: timeZone })}</p>
     </div>
 }
