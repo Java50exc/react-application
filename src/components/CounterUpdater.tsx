@@ -2,9 +2,10 @@ import React from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { counterActions } from "../redux/counterSlice";
 type Props = {
-    operand: number
+    operand: number,
+    canReset?: boolean;
 }
-export const CounterUpdater: React.FC<Props> = ({ operand }) => {
+export const CounterUpdater: React.FC<Props> = ({ operand, canReset }) => {
     const user = useSelector<any, string>(state => state.auth.authUser);
     const dispatch = useDispatch();
     return <div>
@@ -12,7 +13,7 @@ export const CounterUpdater: React.FC<Props> = ({ operand }) => {
             Increment</button>
         <button onClick={() => dispatch(counterActions.decrement(operand))}>
             Decrement</button>
-        {user.includes("admin") && <button onClick={() => dispatch(counterActions.reset())}>
+        {canReset && <button onClick={() => dispatch(counterActions.reset())}>
             Reset</button>}
 
     </div>

@@ -15,7 +15,7 @@ function App() {
    flexDirection: 'column'}}>
     {user || <Login/>}
     {user && <Logout/>}
-    {user && <CounterUpdater operand={1}/>}
+    {user && <CounterUpdater operand={1} canReset={user.includes("admin")}/>}
     {user.includes("admin") && <CounterMultiply factor={2}/>}
     {user && <CounterSquare/>}
   </div>
