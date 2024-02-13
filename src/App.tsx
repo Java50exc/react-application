@@ -4,15 +4,20 @@ import './App.css';
 import { CounterMultiply } from './components/CounterMultiply';
 import { CounterSquare } from './components/CounterSquare';
 import { CounterUpdater } from './components/CounterUpdater';
-import { Timer } from './components/Timer';
+import { Login } from './components/Login';
+import { Logout } from './components/Logout';
+import { useSelector } from 'react-redux';
 
 function App() {
+  const user = useSelector<any, string>(state => state.auth.authUser);
   
   return <div style={{display: 'flex', alignItems: 'center',
    flexDirection: 'column'}}>
-    <CounterUpdater operand={10}/>
-    <CounterMultiply factor={2}/>
-    <CounterSquare/>
+    <Login/>
+    {user && <Logout/>}
+    {user && <CounterUpdater operand={1}/>}
+    {user.includes("admin") && <CounterMultiply factor={2}/>}
+    {user && <CounterSquare/>}
   </div>
 }
 
