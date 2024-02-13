@@ -13,7 +13,7 @@ function App() {
   
   return <div style={{display: 'flex', alignItems: 'center',
    flexDirection: 'column'}}>
-    {user || <Login/>}
+    {!user && <Login/>}
     {user && <Logout/>}
     {user && <CounterUpdater operand={1} canReset={user.includes("admin")}/>}
     {user.includes("admin") && <CounterMultiply factor={2}/>}
