@@ -15,7 +15,7 @@ export const Life: React.FC = () => {
         }
         setNumbers(lifeMatrix.current.nextStep())
     }
-    useEffect(() => {
+    useEffect(() => { 
         const interval = setInterval(tick, tickInterval);
         return () => clearInterval(interval);
     }, [tickInterval, dimensions])
