@@ -5,14 +5,11 @@ import lifeGameConfig from "../config/lifeGameConfig.json"
 
 let matrixZero: LifeMatrix;
 let matrixOne: LifeMatrix;
-let matrixRand: LifeMatrix;
 const { dimensions } = lifeGameConfig;
 
 beforeEach(() => {
     matrixZero = new LifeMatrix(getRandomMatrix(dimensions, dimensions, 0, 0));
     matrixOne = new LifeMatrix(getRandomMatrix(dimensions, dimensions, 1, 1));
-    matrixRand = new LifeMatrix(getRandomMatrix(dimensions, dimensions, 0, 1));
-
 });
 
 //getMatrixPart tests
