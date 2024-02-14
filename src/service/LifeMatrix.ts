@@ -7,21 +7,12 @@ export default class LifeMatrix {
     }
 
     getNeighbours(row: number, column: number): number {
-        let count = 0;
-        if (row > 0) {
-            count += this._numbers[row - 1][column];
-            count += this._numbers[row - 1][column - 1] || 0;
-            count += this._numbers[row - 1][column + 1] || 0;
-        }
-        if (row < this._numbers.length - 1) {
-            count += this._numbers[row + 1][column] || 0;
-            count += this._numbers[row + 1][column + 1] || 0;
-            count += this._numbers[row + 1][column - 1] || 0;
-        }
-        count += this._numbers[row][column - 1] || 0;
-        count += this._numbers[row][column + 1] || 0;
-        return count;
+        return (this._numbers[row - 1]?.[column] || 0) + (this._numbers[row - 1]?.[column - 1] || 0) +
+            (this._numbers[row - 1]?.[column + 1] || 0) + (this._numbers[row + 1]?.[column] || 0) +
+            (this._numbers[row + 1]?.[column + 1] || 0) + (this._numbers[row + 1]?.[column - 1] || 0) +
+            (this._numbers[row][column - 1] || 0) + (this._numbers[row][column + 1] || 0);
     }
+
     nextStep(): number[][] {
         this._numbers = this._numbers.map((row, i) => row.map((cell, j) => {
             const neighbours: number = this.getNeighbours(i, j);
