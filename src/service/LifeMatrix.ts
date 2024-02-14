@@ -1,5 +1,5 @@
 import { getRandomMatrix } from "../util/random";
-
+ 
 export default class LifeMatrix {
     constructor(private _numbers: number[][]){}
     get numbers() {
