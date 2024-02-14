@@ -1,19 +1,36 @@
 .navigator-list {
+    padding: 0;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-around;
     list-style: none;
-    width: 80vw
+    width: 100vw;
+
+    background-color: blue;
+
 }
 .navigator-sublist {
     flex-direction: column;
+    align-items: flex-start;
+    width: fit-content;
 }
+
+li {
+    flex: 1;
+}
+
 .navigator-item {
-    margin-left: 4vw;
-   font-size: 1.5em;
+   font-size: 1.3em;
+   text-decoration: none;
+   display: block;
+   text-align: center;
+   color: white;
 }
+
 .active {
-    background-color: blue;
-    color: white;
-    font-size: 1.6em;
+    border: 3px solid rgb(0, 0, 243);
+    border-radius: 15%;
+    color: rgb(227, 227, 227);
+
+    font-size: 1.35em;
 }
