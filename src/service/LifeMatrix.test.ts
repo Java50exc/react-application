@@ -62,7 +62,7 @@ test("function getNewCell dead cell stay dead (1 neighbour)", () => {
     expect(matrixZero.getNewCell(0, 0)).toEqual(0);
 })
 
-test("function getNewCell dead cell stay dead (1 neighbours)", () => {
+test("function getNewCell dead cell stay dead (2 neighbours)", () => {
     matrixZero.numbers[0][1] = 1;
     matrixZero.numbers[0][1] = 1;
     expect(matrixZero.getNewCell(0, 0)).toEqual(0);
