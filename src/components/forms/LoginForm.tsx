@@ -15,7 +15,8 @@ type Props = {submitFn: (loginData: LoginData) => void }
 
 
 export const LoginForm: React.FC<Props> = ({submitFn}) => {
-    const selector = useSelector<any, string>(status => status.authUser.)
+    const authUser = useSelector<any, string>(state => state.auth.authUser);
+
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
