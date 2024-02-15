@@ -8,25 +8,21 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { LoginData } from "../../model/LoginData";
-import { useDispatch, useSelector } from "react-redux";
-import { UserAccount } from "../../model/UserAccount";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
-type Props = {submitFn: (loginData: LoginData) => void }
-
-
+type Props = {submitFn: (loginData: LoginData) => string }
 
 export const LoginForm: React.FC<Props> = ({submitFn}) => {
     const userField = useRef<HTMLInputElement>(null);
     const passField = useRef<HTMLInputElement>(null);
-
-
+    const [errMsg, setMsg] = useState("");
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
 
-        submitFn({email: data.get('email') as string, password: data.get('password') as string});
+         setMsg(submitFn({email: data.get('email') as string, password: data.get('password') as string}));
+         
 
         if (userField.current && passField.current) {
             userField.current.value ="";
@@ -45,6 +41,7 @@ export const LoginForm: React.FC<Props> = ({submitFn}) => {
                     </Avatar>
 
                     <Typography component="h1" variant="h5">Sign in</Typography>
+                    
 
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                         <TextField margin="normal" required fullWidth id="email" inputRef={userField}
@@ -53,6 +50,11 @@ export const LoginForm: React.FC<Props> = ({submitFn}) => {
                             label="Password" type="password" id="password" autoComplete="current-password" />
                         <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>Sign In</Button>
                     </Box>
+
+                    <Typography component="h1" variant="h5">{errMsg}</Typography>
+
+                    
+
                 </Box>
             </Container>
         </ThemeProvider>

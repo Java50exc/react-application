@@ -5,7 +5,7 @@ export const routes: RouteType[] = [
     {path: '/customers', label: 'Customers', admin: true},
     {path: '/shoppingcart', label: 'Shopping Cart', authenticated: true},
     {path: '/orders', label: 'Orders', authenticated: true},
-    {path: '/products', label: 'Products', always: true},
     {path: '/login', label: 'Login', no_authenticated: true},
+    {path: '/products', label: 'Products', always: true},
     {path: '/logout', label: 'Logout', authenticated: true}
 ]

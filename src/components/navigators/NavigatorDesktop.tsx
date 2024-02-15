@@ -10,21 +10,24 @@ export type Props = {
 }
 export const NavigatorDesktop: React.FC<Props> = ({ subnav, routes }) => {
   const { authUser, authPassword } = useSelector<any, UserAccount>(state => state.auth);
-
   const [value, setValue] = React.useState(0);
   const navigate = useNavigate();
+
   useEffect(() => {
     navigate(routes[0].path)
-  }, [])
+    setValue(0);
+  }, [routes])
+
   const handleChange = (event: any, newValue: number) => {
     setValue(newValue);
   };
-  function getTabs(): ReactNode {
-    return routes.map((route, index) => <Tab key={index} component={Link}
-      to={route.path} label={route.label} />
 
-    )
+  function getTabs(): ReactNode {
+    return routes.map((route, index) =>
+      <Tab key={index} component={Link} to={route.path} 
+        label={route.label + (route.label == 'Logout' ? ` [${authUser}]` : "")} />)
   }
+
   return <Box sx={{}}>
     <AppBar sx={{ backgroundColor: "lightgray", position: "relative" }}>
       <Tabs value={value} onChange={handleChange}>

@@ -8,8 +8,12 @@ const authSlice = createSlice({
     name: "auth",
     reducers: {
         login: (state, data) => {
+            if (data.payload.password !== "123") {
+                throw 'wrong pass';
+            }
             state.authUser = data.payload.user;
             state.authPassword = data.payload.password;
+
         },
         logout: (state) => {
             state.authUser = "";
