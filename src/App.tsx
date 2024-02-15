@@ -9,12 +9,11 @@ import { Dairy } from './components/pages/Dairy';
 import { Home } from './components/pages/Home';
 import { NotFound } from './components/pages/NotFound';
 import { Orders } from './components/pages/Orders';
-import { Products } from './components/navigators/Products';
 import { ShoppingCart } from './components/pages/ShoppingCart';
 import { routes } from './config/layout-config'
-import { Navigator } from './components/navigators/Navigator';
 import { routesProduct } from './config/products-config';
 import { NavigatorDesktop } from './components/navigators/NavigatorDesktop';
+import { LoginForm } from './components/forms/LoginForm';
 
 function App() {
 
@@ -33,13 +32,11 @@ function App() {
                     </Route>
                </Route>
 
-
-
-
-
                <Route path='/*' element={<NotFound />} />
 
           </Routes>
+          <LoginForm/>
+
      </BrowserRouter>
 }
 
