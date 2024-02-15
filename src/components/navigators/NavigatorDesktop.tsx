@@ -2,8 +2,7 @@ import { AppBar, Box, Tabs, Tab } from "@mui/material";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import React, { ReactNode, useEffect } from "react";
 import { RouteType } from "../../model/RouteType";
-import { useSelector } from "react-redux";
-import { UserAccount } from "../../model/UserAccount";
+
 export type Props = {
   subnav?: boolean,
   routes: RouteType[]
@@ -23,12 +22,15 @@ export const NavigatorDesktop: React.FC<Props> = ({ subnav, routes }) => {
 
   function getTabs(): ReactNode {
     return routes.map((route, index) =>
-      <Tab key={index} component={Link} to={route.path} label={route.label} />)
+      <Tab key={index} component={Link} to={route.path} label={route.label} />
+      )
   }
 
-  return <Box sx={{}}>
-    <AppBar sx={{ backgroundColor: "lightgray", position: "relative" }}>
-      <Tabs value={value} onChange={handleChange}>
+
+
+  return <Box sx={{}}> 
+    <AppBar sx={{backgroundColor:"white", position: "relative"}}>
+      <Tabs value={value} onChange={handleChange} variant="fullWidth">
         {getTabs()}
       </Tabs>
     </AppBar>

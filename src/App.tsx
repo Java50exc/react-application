@@ -31,7 +31,7 @@ function App() {
           const logoutRoute = newRoutes.find(route => route.path === '/logout');
 
           if (logoutRoute) {
-               logoutRoute.label = `Logout [${authUser}]`;
+               logoutRoute.label = `Logout [${authUser.split('@')[0]}]`;
           }
           return newRoutes;
      }
