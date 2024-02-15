@@ -13,7 +13,7 @@ import { ShoppingCart } from './components/pages/ShoppingCart';
 import { routes } from './config/layout-config'
 import { routesProduct } from './config/products-config';
 import { NavigatorDesktop } from './components/navigators/NavigatorDesktop';
-import { LoginForm } from './components/forms/LoginForm';
+import LoginForm from './components/forms/LoginForm';
 
 function App() {
 

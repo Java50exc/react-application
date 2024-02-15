@@ -8,14 +8,16 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { LoginData } from "../../model/LoginData";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { UserAccount } from "../../model/UserAccount";
 
 type Props = {submitFn: (loginData: LoginData) => void }
 
 
 
-export const LoginForm: React.FC<Props> = ({submitFn}) => {
-    const authUser = useSelector<any, string>(state => state.auth.authUser);
+const LoginForm: React.FC<Props> = ({submitFn}) => {
+    const {authUser, authPassword} = useSelector<any, UserAccount>(state => state.auth);
+    const dispatch = useDispatch();
 
     // const user = useSelector<any, string>(state => state.auth.authUser);
     // const dispatch = useDispatch()
@@ -60,3 +62,4 @@ export const LoginForm: React.FC<Props> = ({submitFn}) => {
         </ThemeProvider>
     );
 }
+export default LoginForm;

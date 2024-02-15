@@ -1,16 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
-const initialState: { authUser: string } = {
-    authUser: ""
+const initialState: { authUser: string, authPassword: string } = {
+    authUser: "",
+    authPassword: ""
 }
 const authSlice = createSlice({
     initialState,
     name: "auth",
     reducers: {
         login: (state, data) => {
-            state.authUser = data.payload;
+            state.authUser = data.payload.user;
+            state.authPassword = data.payload.password;
         },
         logout: (state) => {
             state.authUser = "";
+            state.authPassword = "";
         }
     }
 });

@@ -1,0 +1,1 @@
+export type UserAccount = {authUser: string, authPassword: string};
