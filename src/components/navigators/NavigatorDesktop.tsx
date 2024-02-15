@@ -2,11 +2,15 @@ import { AppBar, Box, Tabs, Tab } from "@mui/material";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import React, { ReactNode, useEffect } from "react";
 import { RouteType } from "../../model/RouteType";
+import { useSelector } from "react-redux";
+import { UserAccount } from "../../model/UserAccount";
 export type Props = {
   subnav?: boolean,
   routes: RouteType[]
 }
 export const NavigatorDesktop: React.FC<Props> = ({ subnav, routes }) => {
+  const { authUser, authPassword } = useSelector<any, UserAccount>(state => state.auth);
+
   const [value, setValue] = React.useState(0);
   const navigate = useNavigate();
   useEffect(() => {

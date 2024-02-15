@@ -10,34 +10,30 @@ import Button from "@mui/material/Button";
 import { LoginData } from "../../model/LoginData";
 import { useDispatch, useSelector } from "react-redux";
 import { UserAccount } from "../../model/UserAccount";
+import { useRef } from "react";
 
 type Props = {submitFn: (loginData: LoginData) => void }
 
 
 
-const LoginForm: React.FC<Props> = ({submitFn}) => {
-    const {authUser, authPassword} = useSelector<any, UserAccount>(state => state.auth);
-    const dispatch = useDispatch();
-
-    // const user = useSelector<any, string>(state => state.auth.authUser);
-    // const dispatch = useDispatch()
-
-    // const submit = (username: string): string => {
-    //     dispatch(authActions.login(username));
-    //     return '';
-    // }
+export const LoginForm: React.FC<Props> = ({submitFn}) => {
+    const userField = useRef<HTMLInputElement>(null);
+    const passField = useRef<HTMLInputElement>(null);
 
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
 
+        submitFn({email: data.get('email') as string, password: data.get('password') as string});
 
+        if (userField.current && passField.current) {
+            userField.current.value ="";
+            passField.current.value ="";
+        }
     };
+    
 
     return (
         <ThemeProvider theme={createTheme()}>
@@ -51,9 +47,9 @@ const LoginForm: React.FC<Props> = ({submitFn}) => {
                     <Typography component="h1" variant="h5">Sign in</Typography>
 
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                        <TextField margin="normal" required fullWidth id="email"
+                        <TextField margin="normal" required fullWidth id="email" inputRef={userField}
                             label="Email Address" name="email" autoComplete="email" autoFocus />
-                        <TextField margin="normal" required fullWidth name="password"
+                        <TextField margin="normal" required fullWidth name="password" inputRef={passField}
                             label="Password" type="password" id="password" autoComplete="current-password" />
                         <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>Sign In</Button>
                     </Box>
@@ -62,4 +58,3 @@ const LoginForm: React.FC<Props> = ({submitFn}) => {
         </ThemeProvider>
     );
 }
-export default LoginForm;
