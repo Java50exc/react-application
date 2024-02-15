@@ -1,6 +1,6 @@
 import { AppBar, Box, Tabs, Tab } from "@mui/material";
 import { Link, Outlet, useNavigate } from "react-router-dom";
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode, useEffect, useRef } from "react";
 import { RouteType } from "../../model/RouteType";
 
 export type Props = {
@@ -12,8 +12,9 @@ export const NavigatorDesktop: React.FC<Props> = ({ subnav, routes }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    navigate(routes[0].path)
     setValue(0);
+    navigate(routes[0].path)
+    
   }, [routes])
 
   const handleChange = (event: any, newValue: number) => {
@@ -26,11 +27,9 @@ export const NavigatorDesktop: React.FC<Props> = ({ subnav, routes }) => {
       )
   }
 
-
-
   return <Box sx={{}}> 
     <AppBar sx={{backgroundColor:"white", position: "relative"}}>
-      <Tabs value={value} onChange={handleChange} variant="fullWidth">
+      <Tabs value={value >= routes.length ? 0 : value} onChange={handleChange} variant="fullWidth">
         {getTabs()}
       </Tabs>
     </AppBar>
