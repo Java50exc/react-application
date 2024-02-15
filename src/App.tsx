@@ -25,7 +25,7 @@ function App() {
                     <Route path='customers' element={<Customers />} />
                     <Route path='orders' element={<Orders />} />
                     <Route path='shoppingcart' element={<ShoppingCart />} />
-                    <Route path='products' element={<Navigator subnav routes={routesProduct} />}>
+                    <Route path='products' element={<NavigatorDesktop subnav routes={routesProduct} />}>
                          <Route path='dairy' element={<Dairy />} />
                          <Route path='bread' element={<Bread />} />
                         
