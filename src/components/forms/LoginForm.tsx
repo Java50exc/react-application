@@ -4,7 +4,7 @@ import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import Typography from "@mui/material/Typography";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import BlockSharpIcon from '@mui/icons-material/BlockSharp';
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { LoginData } from "../../model/LoginData";
@@ -36,8 +36,8 @@ export const LoginForm: React.FC<Props> = ({submitFn}) => {
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                        <LockOutlinedIcon />
+                    <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
+                        <BlockSharpIcon />
                     </Avatar>
 
                     <Typography component="h1" variant="h5">Sign in</Typography>
