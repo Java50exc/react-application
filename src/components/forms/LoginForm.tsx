@@ -8,12 +8,14 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { LoginData } from "../../model/LoginData";
+import { useSelector } from "react-redux";
 
 type Props = {submitFn: (loginData: LoginData) => void }
 
 
 
 export const LoginForm: React.FC<Props> = ({submitFn}) => {
+    const selector = useSelector<any, string>(status => status.authUser.)
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
