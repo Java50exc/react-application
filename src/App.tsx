@@ -19,15 +19,21 @@ import { RouteType } from './model/RouteType';
 
 function App() {
      const { authUser } = useSelector<any, UserAccount>(state => state.auth);
-     const [curRoutes, setRoutes] = useState(getRoutes(routes));
+     const [curRoutes, setRoutes] = useState(getRoutes());
 
-     useEffect(() => { setRoutes(getRoutes(routes)) }, [authUser]);
+     useEffect(() => { setRoutes(getRoutes()) }, [authUser]);
 
-     function getRoutes(routes: RouteType[]): RouteType[] {
-          return routes.filter(r => r.always ||
+     function getRoutes(): RouteType[] {
+          const newRoutes = routes.filter(r => r.always ||
                (authUser && r.authenticated) ||
                (authUser.includes("admin") && r.admin) ||
                (!authUser && r.no_authenticated));
+          const logoutRoute = newRoutes.find(route => route.path === '/logout');
+
+          if (logoutRoute) {
+               logoutRoute.label = `Logout [${authUser}]`;
+          }
+          return newRoutes;
      }
 
      return <BrowserRouter>
