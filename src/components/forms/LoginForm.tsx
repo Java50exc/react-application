@@ -15,6 +15,8 @@ import GoogleIconSvg from './google-icon.svg';
 import Divider from '@mui/material/Divider';
 import { useDispatch, useSelector } from 'react-redux';
 import { codeActions } from '../../redux/codeSlice';
+import { authService } from '../../config/auth-service-config';
+import AuthServiceFirebase from '../../service/AuthServiceFirebase';
 
 
 function Copyright(props: any) {
@@ -102,6 +104,10 @@ export const LoginForm: React.FC<Props> = ({ submitFn }) => {
                         <Button fullWidth variant="outlined" sx={{ mt: 2 }} onClick={() => submitFn({ email: "GOOGLE", password: "" })}>
                             <img src={GoogleIconSvg} alt="Google" />
                         </Button>
+                        {/* redirect oAith sign in experiments */}
+                        {/* <Button fullWidth variant="outlined" sx={{ mt: 2 }} onClick={() => new AuthServiceFirebase().signRedirect()}>
+                            <img src={GoogleIconSvg} alt="Google" />
+                        </Button> */}
 
                     </Box>
                 </Box>

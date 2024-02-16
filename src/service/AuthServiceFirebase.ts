@@ -1,7 +1,7 @@
 import { LoginData } from "../model/LoginData";
 import AuthService from "./AuthService";
 import { firebaseApp } from "../config/firebase-config";
-import { getAuth, signInWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider, signInWithRedirect, getRedirectResult } from "firebase/auth";
 
 export default class AuthServiceFirebase implements AuthService {
 
@@ -21,6 +21,11 @@ export default class AuthServiceFirebase implements AuthService {
         const credential = await signInWithPopup(this.auth, new GoogleAuthProvider());
         return credential.user.email as string;
     }
+
+    //----------------- redirect oAuth sign in experiments
+    // async signRedirect() {
+    //     signInWithRedirect(this.auth, new GoogleAuthProvider());
+    // }
 
     async logout(): Promise<void> {
         await signOut(this.auth);
