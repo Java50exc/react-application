@@ -21,25 +21,25 @@ import { Login } from './components/pages/Login';
 import { Logout } from './components/pages/Logout';
 
 function App() {
-     const authUser = useSelector<any, string>(state=>state.auth.authUser);
-const [routesState, setRoutes] = useState(getRoutes());
+     const authUser = useSelector<any, string>(state => state.auth.authUser);
+     const [routesState, setRoutes] = useState(getRoutes());
 
-function getRoutes(): RouteType[] {
-     const routesRes = routes.filter(routePredicate);
-     const logoutRoute = routes.find(route => route.path === '/logout');
-     if (logoutRoute) {
-          logoutRoute.label = authUser;
+     function getRoutes(): RouteType[] {
+          const routesRes = routes.filter(routePredicate);
+          const logoutRoute = routes.find(route => route.path === '/logout');
+          if (logoutRoute) {
+               logoutRoute.label = authUser;
+          }
+          return routesRes;
      }
-     return routesRes;
-}
-function routePredicate(route: RouteType): boolean | undefined {
-     return route.always ||( route.authenticated && !!authUser )
-      || (route.admin && authUser.includes('admin')) ||
-       (route.no_authenticated && !authUser)  
-}
-useEffect(() => {
-     setRoutes(getRoutes());
-}, [authUser])
+     function routePredicate(route: RouteType): boolean | undefined {
+          return route.always || (route.authenticated && !!authUser)
+               || (route.admin && authUser.includes('admin')) ||
+               (route.no_authenticated && !authUser)
+     }
+     useEffect(() => {
+          setRoutes(getRoutes());
+     }, [authUser])
      return <BrowserRouter>
           <Routes>
                <Route path='/' element={<NavigatorDesktop routes={routesState} />}>
@@ -50,12 +50,12 @@ useEffect(() => {
                     <Route path='products' element={<Navigator subnav routes={routesProduct} />}>
                          <Route path='dairy' element={<Dairy />} />
                          <Route path='bread' element={<Bread />} />
-                        
+
 
                     </Route>
-                    <Route path='login' element={<Login></Login>}/>
-                    <Route path='logout' element={<Logout></Logout>}/>
-                    <Route path='/*' element={<NotFound/>}/>
+                    <Route path='login' element={<Login></Login>} />
+                    <Route path='logout' element={<Logout></Logout>} />
+                    <Route path='/*' element={<NotFound />} />
                </Route>
 
 
