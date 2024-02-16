@@ -13,6 +13,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { LoginData } from '../../model/LoginData';
 import GoogleIconSvg from './google-icon.svg';
 import Divider from '@mui/material/Divider';
+import { useDispatch, useSelector } from 'react-redux';
+import { codeActions } from '../../redux/codeSlice';
 
 
 function Copyright(props: any) {
@@ -30,19 +32,20 @@ function Copyright(props: any) {
 
 const theme = createTheme();
 type Props = {
-    submitFn: (loginData: LoginData) => Promise<string>
+    submitFn: (loginData: LoginData) => void
 
 }
 export const LoginForm: React.FC<Props> = ({ submitFn }) => {
-    const [msg, setMsg] = React.useState('OK');
+    const codeSelector = useSelector<any, string>(state => state.codeState.code);
+    const dispatch = useDispatch();
 
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        setMsg(await submitFn({
+        submitFn({
             email: data.get('email') as string,
             password: data.get('password') as string,
-        }));
+        });
     };
 
     return (
@@ -92,8 +95,8 @@ export const LoginForm: React.FC<Props> = ({ submitFn }) => {
                         >
                             Sign In
                         </Button>
-                        {msg != 'OK' && <Alert severity="error" onClose={() => {setMsg('OK') }}>
-                            {msg}
+                        {codeSelector != 'OK' && <Alert severity="error" onClose={() => {dispatch(codeActions.reset())}}>
+                            {codeSelector}
                         </Alert>}
                         <Divider sx={{fontWeight: 'bold'}}>or</Divider>
                         <Button fullWidth variant="outlined" sx={{ mt: 2 }} onClick={() => submitFn({ email: "GOOGLE", password: "" })}>
