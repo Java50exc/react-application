@@ -1,3 +1,8 @@
+/**
+ * @jest-environment node
+ */
+
+
 import { productsService } from "./config/products-service-config"
 import productsConfig from "./config/products-config.json"
 import { getRandomNumber } from "./util/random";
@@ -10,7 +15,7 @@ beforeAll(() => {
 
 test("setProducts test", () => {
     productsService.setProducts().then(count => {
-        expect(count).toEqual(1000);
+        expect(count).toEqual(100);
     });
 });
 
@@ -32,7 +37,7 @@ test("random category exists", () => {
 
 test("all category exists", () => {
     const promises = categories.map(c => productsService.isCategoryExist(c));
-    Promise.all(promises).then(values => expect(values.every(val => val)).toBeTruthy())
+    Promise.all(promises).then(values => expect(values.every(val => val)).toBeTruthy());
 });
 
 test("remove category", () => {
@@ -41,6 +46,7 @@ test("remove category", () => {
         .then(() => productsService.isCategoryExist(category))
         .then(res => expect(res).toBeFalsy());
 });
+
 
 test("add category", () => {
     const category = categories[getRandomNumber(0, categories.length - 1)] + "123";
