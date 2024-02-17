@@ -1,5 +1,4 @@
 import { Typography, Box, Avatar, Grid } from "@mui/material"
-import { DataGrid, GridColDef, GridRowHeightParams } from "@mui/x-data-grid"
 import { ProductType } from "../../model/ProductType"
 import { useSelector } from "react-redux";
 import * as React from 'react';
@@ -10,19 +9,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 
 export const ProductsClient: React.FC = () => {
-    const rowHeight: number = 50;
     const products: ProductType[] = useSelector<any, ProductType[]>(state => state.productsState.products);
-    const columns: GridColDef[] = [
-        {
-            field: "image", headerName: 'Image', flex: 0.2,
-            renderCell: (params) => <Avatar src={`images/${params.value}`}
-                sx={{ width: "100%", height: rowHeight }} variant="rounded" />, align: "center", headerAlign: "center"
-        },
-        { field: "title", headerName: 'Title', flex: 0.8 },
-        { field: "category", headerName: "Category", flex: 0.5 },
-        { field: "unit", headerName: "Unit", flex: 0.4 },
-        { field: "cost", headerName: "Cost (ILS)", flex: 0.3 }
-    ];
 
     const getCardMedia = (path: string) => <CardMedia component="img" height={200} image={`images/${path}`} />;
     const getCardContent = (title: string, unit: string, cost: number) => {
