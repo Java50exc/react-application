@@ -13,14 +13,16 @@ export const ShoppingCart: React.FC = () => {
     const tableData = useMemo(() => getTableData(), [products, shopping]);
 
     const columns: GridColDef[] = [
-        {field:"image", headerName: '', flex: 0.3,
-         renderCell: (params) => <Avatar src={`images/${params.value}`} 
-         sx={{width: "90%", height: "80px"}}/>, align: "center", headerAlign: "center"},
-        {field: "title", headerName: 'Title', flex: 0.8, align: "center", headerAlign: "center"},
-        {field: "unit", headerName: 'Unit', flex: 0.8, align: "center", headerAlign: "center"},
-        {field: "cost", headerName: "Cost (ILS)", flex: 0.3},
-        {field: "count", headerName: "Count", flex: 0.3},
-        {field: "totalPrice", headerName: 'Total price', flex: 0.8, align: "center", headerAlign: "center"},
+        {
+            field: "image", headerName: '', flex: 0.3,
+            renderCell: (params) => <Avatar src={`images/${params.value}`}
+                sx={{ width: "90%", height: "80px" }} />, align: "center", headerAlign: "center"
+        },
+        { field: "title", headerName: 'Title', flex: 0.8, align: "center", headerAlign: "center" },
+        { field: "unit", headerName: 'Unit', flex: 0.8, align: "center", headerAlign: "center" },
+        { field: "cost", headerName: "Cost (ILS)", flex: 0.3 },
+        { field: "count", headerName: "Count", flex: 0.3 },
+        { field: "totalPrice", headerName: 'Total price', flex: 0.8, align: "center", headerAlign: "center" },
     ];
 
     function getTableData(): (ShoppingProductDataType | undefined)[] {
@@ -29,8 +31,9 @@ export const ShoppingCart: React.FC = () => {
 
             if (product) {
                 return {
-                    count: sItem.count, image: product?.image, title: product?.title, category: product?.category,
-                    unit: product?.unit, cost: product?.cost, totalPrice: product!.cost * sItem.count, id: sItem.id
+                    ...product,
+                    ...sItem,
+                    totalPrice: product!.cost * sItem.count
                 };
             }
         }).filter(Boolean);
@@ -42,12 +45,12 @@ export const ShoppingCart: React.FC = () => {
 
 
 
-    return  <Box sx={{width: "100vw",display: "flex", justifyContent:"center", alignItems:"center"}}>
-    <Box sx={{width: "80vw",height: "80vh"}}>
-    <DataGrid columns={columns} rows={tableData} getRowHeight={() => 'auto'} hideFooter/>
-    <Typography sx={{width: '75vw', textAlign:"end"}}>Total: {getTotal()} ILS</Typography>
+    return <Box sx={{ width: "100vw", display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <Box sx={{ width: "80vw", height: "80vh" }}>
+            <DataGrid columns={columns} rows={tableData} getRowHeight={() => 'auto'} hideFooter />
+            <Typography sx={{ width: '75vw', textAlign: "end" }}>Total: {getTotal()} ILS</Typography>
 
-</Box>
-</Box>
+        </Box>
+    </Box>
 
 }
