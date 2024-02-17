@@ -1,4 +1,4 @@
-import { Typography, Box, Avatar } from "@mui/material"
+import { Typography, Box, Avatar, Grid } from "@mui/material"
 import {DataGrid, GridColDef, GridRowHeightParams} from "@mui/x-data-grid"
 import { ProductType } from "../../model/ProductType"
 import { useSelector } from "react-redux"
@@ -16,6 +16,10 @@ export const ProductsAdmin: React.FC = () => {
         {field: "cost", headerName: "Cost (ILS)", flex: 0.3}
     ]
     return <Box sx={{width: "100%",height: "90vh"}}>
-        <DataGrid columns={columns} rows={products} getRowHeight={() => rowHeight + 2}/>
-    </Box>
+    <DataGrid columns={columns} rows={products} getRowHeight={() => rowHeight + 2}/>
+</Box>
+   
+    
+   
+    
 }
