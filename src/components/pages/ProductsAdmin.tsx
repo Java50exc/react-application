@@ -24,7 +24,7 @@ export const ProductsAdmin: React.FC = () => {
         {field: "title", headerName: 'Title', flex: 0.8, align: "center", headerAlign: "center"},
         {field: "category", headerName: "Category", flex: 0.5},
         {field: "unit", headerName: "Unit", flex: 0.4},
-        {field: "cost", headerName: "Cost (ILS)", flex: 0.3, editable: true},
+        {field: "cost", headerName: "Cost (ILS)", flex: 0.3, editable: true, type: "number"},
         {
             field: 'actions', type: 'actions', flex: 0.1, getActions: (params) => [
                 <GridActionsCellItem label="remove" icon={<Delete></Delete>}
@@ -38,8 +38,7 @@ export const ProductsAdmin: React.FC = () => {
         if (newRow.cost > (oldRow.cost + oldRow.cost / 2) || newRow.cost < (oldRow.cost - oldRow.cost / 2)) {
             throw 'Update cannot be greater than on 50% from the existing cost';
         }
-        await productsService.removeProduct(oldRow.id!);
-        await productsService.addProduct(newRow);
+        await productsService.setProduct(newRow);
         return newRow;
     }
 
