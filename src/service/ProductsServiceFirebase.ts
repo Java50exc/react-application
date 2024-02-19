@@ -11,6 +11,7 @@ import { Observable } from "rxjs";
 export const PRODUCTS_COLLECTION = "products";
 export const CATEGORIES_COLLECTION = "categories";
 export class ProductsServiceFirebase implements ProductsService {
+
     productsCollection = collection(getFirestore(firebaseApp), PRODUCTS_COLLECTION);
     categoriesCollection = collection(getFirestore(firebaseApp), CATEGORIES_COLLECTION);
     async addProduct(product: ProductType): Promise<void> {
@@ -51,12 +52,16 @@ export class ProductsServiceFirebase implements ProductsService {
                  await this.addProduct(products[i]);
                  count++;
             }
-            console.log(`created ${count} products`)
+            console.log(`created ${count} products`);
         }
         return count;
     }
     getProducts(): Observable<ProductType[]> {
-        return collectionData(this.productsCollection) as Observable<ProductType[]>
+        return collectionData(this.productsCollection) as Observable<ProductType[]>;
+    }
+
+    getCategories(): Observable<CategoryType[]> {
+        return collectionData(this.categoriesCollection) as Observable<CategoryType[]>;
     }
 
 }
