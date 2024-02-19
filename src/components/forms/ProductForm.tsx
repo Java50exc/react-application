@@ -59,8 +59,8 @@ export const ProductForm: React.FC<Props> = ({submitFn}) => {
         setProduct({...product, unit});
     };
 
-    const costHandler = (event: SelectChangeEvent) => {
-        const unit = event.target.value;
+    const costHandler = (event: any) => {
+        const cost = event.target.value;
         setProduct({...product, cost});
     };
 
