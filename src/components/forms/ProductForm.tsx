@@ -6,13 +6,13 @@ import {
     Grid,
     InputLabel,
     MenuItem,
-    NativeSelect,
     Select, SelectChangeEvent,
     TextField
 } from "@mui/material";
 import {ProductType} from "../../model/ProductType"
 import {useState, useRef} from "react";
 import {useSelector} from "react-redux";
+import productParametersConfig from '../../config/product-parameters-config.json'
 
 type Props = {
     submitFn: (product: ProductType) => string
@@ -25,6 +25,8 @@ export const ProductForm: React.FC<Props> = ({submitFn}) => {
     const [product, setProduct] = useState<ProductType>(initialProduct);
     const image = useRef<string>('');
     const categories: string[] = useSelector<any, string[]>(state => state.categoriesState.categories);
+    const minCost = productParametersConfig.minCost;
+    const maxCost = productParametersConfig.maxCost;
 
     function onSubmitFn(event: any) {
         event.preventDefault(); //canceling default form submit
@@ -52,8 +54,23 @@ export const ProductForm: React.FC<Props> = ({submitFn}) => {
         setProduct({...product, category});
     };
 
+    const unitHandler = (event: SelectChangeEvent) => {
+        const unit = event.target.value;
+        setProduct({...product, unit});
+    };
+
+    const costHandler = (event: SelectChangeEvent) => {
+        const unit = event.target.value;
+        setProduct({...product, cost});
+    };
+
     const getCategoryMenuItems = (): JSX.Element[] =>
         categories.map((c: string, i: number) => <MenuItem value={c} key={i}>c</MenuItem>);
+
+    function getUnitMenuItems() {
+        return productParametersConfig.units.map((c, i) => <MenuItem value={c} key={i}>c</MenuItem>)
+    }
+
 
     return <Box>
         <form onSubmit={onSubmitFn}>
@@ -80,13 +97,27 @@ export const ProductForm: React.FC<Props> = ({submitFn}) => {
                 <Grid item xs={8} md={7}>
                     <TextField label='Title' required fullWidth value={product.title} onChange={titleHandler}/></Grid>
                 <Grid item xs={8} md={7}>
-                    <FormControl variant="standard" sx={{m: 1, minWidth: 120}}>
-                        <InputLabel>Age</InputLabel>
+                    <FormControl variant="standard" sx={{m: 1, minWidth: 120}} required={true}>
+                        <InputLabel>Category</InputLabel>
                         <Select value={product.category} onChange={categoryHandler} label="Category">
                             <MenuItem value=""><em>None</em></MenuItem>
                             {getCategoryMenuItems()}
                         </Select>
                     </FormControl>
+                    <Grid item xs={8} md={7}>
+                        <FormControl variant="standard" sx={{m: 1, minWidth: 120}} required={true}>
+                            <InputLabel>Unit</InputLabel>
+                            <Select value={product.unit} onChange={unitHandler} label="Unit">
+                                <MenuItem value=""><em>None</em></MenuItem>
+                                {getUnitMenuItems()}
+                            </Select>
+                        </FormControl>
+                        <Grid item xs={8} md={7}>
+                            <TextField label="cost" fullWidth required type="number" onChange={costHandler}
+                                       value={product.cost} helperText={`enter cost in range [${minCost}-${maxCost}]`}
+                                       inputProps={{min: `${minCost}`, max: `${maxCost}`}}/>
+                        </Grid>
+                    </Grid>
                 </Grid>
             </Grid>
 
