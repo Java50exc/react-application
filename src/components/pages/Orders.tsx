@@ -20,7 +20,6 @@ export const Orders: React.FC = () => {
     }));
     const columns: GridColDef[] = [
         {field: 'id', headerName: 'Order ID', flex: 0.2, align: 'center', headerAlign: 'center',},
-        {field: 'email', headerName: 'Email', flex: 0.2, align: 'center', headerAlign: 'center'},
         {field: 'amount', headerName: 'Products Amount', align: 'center', flex: 0.1},
         {field: 'cost', headerName: 'Cost(ILS)', flex: 0.08, align: 'center', type: 'number'},
         {field: 'orderDate', headerName: 'Order Date', flex: 0.1, align: 'center', type: 'string'},
@@ -39,15 +38,17 @@ export const Orders: React.FC = () => {
             field: 'actions', type: 'actions', headerName: 'Delivery', flex: 0.1,
             getActions: (params: GridRowParams<any>) => [
                 <GridActionsCellItem label="delivery" icon={<LocalShipping/>}
+                                     disabled={params.row.deliveryDate}
                                      onClick={async () => await
                                          ordersService.setDate(params.id as string, new Date()
                                              .toISOString().substring(0, 10))}/>
             ]
-        })
+        });
+        columns.unshift({field: 'email', headerName: 'Email', flex: 0.2, align: 'center', headerAlign: 'center'});
     }
 
     async function updateDate(newRow: OrderRow): Promise<any> {
-        if (newRow.deliveryDate > new Date().toISOString() || newRow.deliveryDate < newRow.orderDate) {
+        if (newRow.deliveryDate && (newRow.deliveryDate <= new Date().toISOString() || newRow.deliveryDate >= newRow.orderDate)) {
             throw 'delivery date must be between order date and today date'
         }
         await ordersService.setDate(newRow.id, newRow.deliveryDate)
