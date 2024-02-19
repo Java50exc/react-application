@@ -42,11 +42,16 @@ export const ProductsAdmin: React.FC = () => {
         setOpen(true);
     }
     function submitAddProduct(product: ProductType): string {
-        //TODO validation of title & unit cannot be the same at two different products
-        productsService.addProduct(product);
-        setFlAdd(false);
-        return '';
+        let errMsg = '';
+        if (products.find(p => p.title === product.title && p.unit === product.unit)) {
+            errMsg = "There is the same product in the store [same title and unit]";
+        } else {
+            productsService.addProduct(product);
+            setFlAdd(false);
+        }
+        return errMsg;
     }
+
     return !flAdd ? <Box sx={{width: "100vw",display: "flex",
      flexDirection: "column", justifyContent:"center", alignItems: "center"}}>
         <Box sx={{width: "80vw",height: "60vh"}}>
