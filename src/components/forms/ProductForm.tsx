@@ -25,7 +25,7 @@ export const ProductForm: React.FC<Props> = ({submitFn}) => {
         event.preventDefault(); //canceling default form submit
         alertMessage.current = submitFn(product);
         if (!alertMessage.current) {
-            document.querySelector("form")!.reset();
+            // document.querySelector("form")!.reset();
         } else {
             setAlert(true);
         }
@@ -62,6 +62,11 @@ export const ProductForm: React.FC<Props> = ({submitFn}) => {
 
     const getUnitMenuItems = () => productParametersConfig.units.map((c, i) =>
         <MenuItem value={c} key={i}>{c}</MenuItem>);
+
+    const resetForm = () => {
+        setProduct(initialProduct);
+        document.querySelector("form")!.reset();
+    }
 
 
     return <Box>
@@ -106,7 +111,7 @@ export const ProductForm: React.FC<Props> = ({submitFn}) => {
                             <Button variant={"contained"} type='submit' fullWidth>Submit</Button>
                         </Grid>
                         <Grid item xs={4}>
-                            <Button variant={"contained"} type='reset' fullWidth>Reset</Button>
+                            <Button variant={"contained"} type='reset' onClick={resetForm} fullWidth>Reset</Button>
                         </Grid>
                     </Grid>
                 </Grid>
