@@ -1,7 +1,9 @@
 import { Observable } from "rxjs";
 import { ShoppingProductType } from "../model/ShoppingProductType";
-import { collection, getFirestore, doc, getDoc, setDoc, deleteDoc, 
-     DocumentReference, CollectionReference, query, where } from "firebase/firestore";
+import {
+    collection, getFirestore, doc, getDoc, setDoc, deleteDoc,
+    DocumentReference, CollectionReference, query, where, getDocs
+} from "firebase/firestore";
 import { collectionData } from "rxfire/firestore";
 import OrdersService from "./OrdersService";
 import { firebaseApp } from "../config/firebase-config";
@@ -73,6 +75,14 @@ export default class OrdersServiceFirebase implements OrdersService {
         const customerCollection =
          query(this.ordersCollection, where("email", "==", email));
          return collectionData(customerCollection) as Observable<OrderType[]> ;
+    }
+
+    async setDate(id: string, date: string): Promise<void> {
+        const que = query(this.ordersCollection, where("id", "==", id));
+        const orders = await getDocs(que);
+        const order = orders.docs[0].data() as OrderType;
+        order.deliveryDate = date;
+        await setDoc(doc(this.ordersCollection, order.id), order);
     }
     getAllOrders(): Observable<OrderType[]> {
         return collectionData(this.ordersCollection) as Observable<OrderType[]>

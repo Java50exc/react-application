@@ -12,4 +12,5 @@ export default interface OrdersService {
     createOrder(email: string, shopping: ShoppingDataType[]): Promise<void>;
     getCustomerOrders(email:string):Observable<OrderType[]>;
     getAllOrders():Observable<OrderType[]>;
+    setDate(id: string, date: string): Promise<void>
 }
