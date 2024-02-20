@@ -18,6 +18,7 @@ import Typography from '@mui/material/Typography';
 import { RouteType } from '../../model/RouteType';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { Tab } from '@mui/material';
 type Props = {
     subnav?: boolean,
     routes: RouteType[]
@@ -57,7 +58,7 @@ export const NavigatorPortrait: React.FC<Props> = ({ routes }) => {
         return routes.map((r, i) => {
             return <ListItem key={i} disablePadding>
                 <ListItemButton >
-                    <Link to={r.path}>{r.label}</Link>
+                    <Tab component={Link} to={r.path} label={r.label}/>
                 </ListItemButton>
             </ListItem>
         })
