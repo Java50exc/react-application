@@ -11,4 +11,6 @@ type Props = {
 export const Navigator: React.FC<Props> = (props) => {
     const navigatorDesktop =  useMediaQuery('(min-width:600px)');
     return navigatorDesktop ? <NavigatorDesktop routes={props.routes}/>: <NavigatorPortrait routes={props.routes}/>;
+
+    
 }
