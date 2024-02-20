@@ -5,12 +5,12 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBPleMDhvj82F3vasdigEXccNKclBkhAYA",
-  authDomain: "bakery-58c28.firebaseapp.com",
-  projectId: "bakery-58c28",
-  storageBucket: "bakery-58c28.appspot.com",
-  messagingSenderId: "78865330860",
-  appId: "1:78865330860:web:65801171373eae3fbca509"
+  apiKey: "AIzaSyCPkGCMknf-Vj8HSymEAHtjQWNsPXuIceU",
+  authDomain: "bakery-77818.firebaseapp.com",
+  projectId: "bakery-77818",
+  storageBucket: "bakery-77818.appspot.com",
+  messagingSenderId: "363128948267",
+  appId: "1:363128948267:web:58f7ccef3fde2006c20c6e"
 };
 
 // Initialize Firebase
