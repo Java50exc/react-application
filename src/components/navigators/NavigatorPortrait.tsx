@@ -25,7 +25,6 @@ type Props = {
 export const NavigatorPortrait: React.FC<Props> = ({ routes }) => {
     const drawerWidth = 240;
     const [mobileOpen, setMobileOpen] = useState(false);
-    const [isClosing, setIsClosing] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
     const [title, setTitle] = useState('');
@@ -33,11 +32,12 @@ export const NavigatorPortrait: React.FC<Props> = ({ routes }) => {
 
     useEffect(() => {
         setTitle(getTitle())
+        setMobileOpen(false)
     }, [location]);
 
     useEffect(() => {
-           navigate(routes[0].path)
-        },[routes])
+        navigate(routes[0].path)
+    }, [routes])
 
 
     function getTitle(): string {
@@ -45,18 +45,12 @@ export const NavigatorPortrait: React.FC<Props> = ({ routes }) => {
     }
 
     const handleDrawerClose = () => {
-        setIsClosing(true);
         setMobileOpen(false);
     };
 
-    const handleDrawerTransitionEnd = () => {
-        setIsClosing(false);
-    };
 
     const handleDrawerToggle = () => {
-        if (!isClosing) {
-            setMobileOpen(!mobileOpen);
-        }
+        setMobileOpen(!mobileOpen);
     };
 
     function getDrawer() {
@@ -86,7 +80,6 @@ export const NavigatorPortrait: React.FC<Props> = ({ routes }) => {
             <Box sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}>
                 <Drawer
                     open={mobileOpen}
-                    onTransitionEnd={handleDrawerTransitionEnd}
                     onClose={handleDrawerClose}
                     ModalProps={{ keepMounted: true }}
                     sx={{ display: { xs: 'block', sm: 'none' }, '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth } }}>
