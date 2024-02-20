@@ -1,0 +1,43 @@
+[debug] [2024-02-20T23:12:31.996Z] ----------------------------------------------------------------------
+[debug] [2024-02-20T23:12:31.998Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\ania5\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2024-02-20T23:12:31.998Z] CLI Version:   13.3.0
+[debug] [2024-02-20T23:12:31.999Z] Platform:      win32
+[debug] [2024-02-20T23:12:31.999Z] Node Version:  v18.12.1
+[debug] [2024-02-20T23:12:32.000Z] Time:          Wed Feb 21 2024 01:12:31 GMT+0200 (Израиль, стандартное время)
+[debug] [2024-02-20T23:12:32.000Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-02-20T23:12:32.073Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-02-20T23:12:32.074Z] > authorizing via signed-in user (allanteone@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  E:\TR50exc\react-application
+
+Before we get started, keep in mind:
+
+  * You are initializing within an existing Firebase project directory
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2024-02-20T23:12:43.108Z] Using project from CLI flag: bakery-58c28
+[debug] [2024-02-20T23:12:43.110Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/bakery-58c28 [none]
+[debug] [2024-02-20T23:12:43.568Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/bakery-58c28 403
+[debug] [2024-02-20T23:12:43.568Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/bakery-58c28 {"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}}
+[debug] [2024-02-20T23:12:43.569Z] HTTP Error: 403, The caller does not have permission
+[debug] [2024-02-20T23:12:43.734Z] FirebaseError: HTTP Error: 403, The caller does not have permission
+    at responseToError (C:\Users\ania5\AppData\Roaming\npm\node_modules\firebase-tools\lib\responseToError.js:49:12)
+    at RetryOperation._fn (C:\Users\ania5\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:292:77)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[error] 
+[error] Error: Failed to get Firebase project bakery-58c28. Please make sure the project exists and your account has permission to access it.
